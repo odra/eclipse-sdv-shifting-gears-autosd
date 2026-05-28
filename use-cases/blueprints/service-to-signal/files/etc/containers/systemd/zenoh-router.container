@@ -1,0 +1,19 @@
+[Unit]
+Description=zenoh-router
+WantedBy=default.target
+After=eclipse-sdv-mount.service
+
+[Container]
+ContainerName=zenoh-router
+Image=docker.io/eclipse/zenoh:1.0.1
+PodmanArgs=--security-opt label=disable
+Network=esdv.network
+HostName=zenoh-router
+PublishPort=7447:7447
+Environment=RUST_LOG=INFO
+Environment=ZENOH_CONFIG=/zenoh-config.json5
+Volume=/usr/share/esdv/service-to-signal/config/zenoh-router-config.json5:/zenoh-config.json5
+Exec=--config=/zenoh-config.json5
+
+[Install]
+WantedBy=multi-user.target default.target

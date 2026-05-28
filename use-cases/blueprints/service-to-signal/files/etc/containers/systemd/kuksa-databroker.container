@@ -1,0 +1,16 @@
+[Unit]
+Description=kuksa-databroker
+WantedBy=default.target
+
+[Container]
+ContainerName=kuksa-databroker
+Image=ghcr.io/eclipse-kuksa/kuksa-databroker:0.5.0
+Network=esdv.network
+HostName=kuksa-databroker
+PublishPort=55556:55556
+PublishPort=55555:55555
+Environment=KUKSA_DATABROKER_PORT=55556
+Environment=KUKSA_DATA_BROKER_ADDR=0.0.0.0
+
+[Install]
+WantedBy=multi-user.target default.target

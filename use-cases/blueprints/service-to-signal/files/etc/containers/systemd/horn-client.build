@@ -1,0 +1,15 @@
+[Unit]
+Description=horn-client builder
+After=virtiofs-mount.service
+After=software-horn-build.service
+
+[Build]
+ImageTag=localhost/horn-client:latest
+SetWorkingDirectory=/usr/share/esdv/service-to-signal/components
+File=/usr/share/esdv/service-to-signal/components/Dockerfile.horn-client
+
+# [Service]
+# ExecStopPost=podman image prune -f
+
+[Install]
+WantedBy=multi-user.target default.target

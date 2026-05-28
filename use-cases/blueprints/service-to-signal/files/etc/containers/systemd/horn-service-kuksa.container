@@ -1,0 +1,19 @@
+[Unit]
+Description=horn-service-kuksa
+Wants=kuksa-databroker.service zenoh-router.service
+After=horn-service-kuksa-build.service
+After=kuksa-databroker.service zenoh-router.service
+
+[Container]
+ContainerName=horn-service-kuksa
+Image=localhost/horn-service-kuksa:latest
+Network=esdv.network
+PodmanArgs=--security-opt label=disable
+Environment=KUKSA_ADDRESS=http://kuksa-databroker:55555
+Environment=KUKSA_ENABLED=true
+Environment=ZENOH_CONFIG=/zenoh-config.json5
+Volume=/usr/share/esdv/service-to-signal/config/horn-service-zenoh-config.json5:/zenoh-config.json5
+
+[Install]
+WantedBy=multi-user.target default.target
+

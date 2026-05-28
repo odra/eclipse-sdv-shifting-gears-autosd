@@ -1,0 +1,15 @@
+[Unit]
+Description=horn-service-kuksa builder
+After=esdv-blueprint-mount.service
+After=horn-service-kuksa-build.service
+
+[Build]
+ImageTag=localhost/software-horn:latest
+SetWorkingDirectory=/usr/share/esdv/service-to-signal/components
+File=/usr/share/esdv/service-to-signal/components/Dockerfile.software-horn
+
+# [Service]
+# ExecStopPost=podman image prune -f
+
+[Install]
+WantedBy=multi-user.target default.target

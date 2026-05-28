@@ -1,0 +1,13 @@
+[Unit]
+Description=horn-client
+Wants=horn-service-kuksa.service
+After=software-horn.service
+After=horn-client-build.service
+
+[Container]
+ContainerName=horn-client
+Image=localhost/horn-client:latest
+Network=esdv.network
+
+[Install]
+WantedBy=multi-user.target default.target

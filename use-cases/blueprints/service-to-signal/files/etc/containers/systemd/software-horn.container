@@ -1,0 +1,17 @@
+[Unit]
+Description=software-horn
+Wants=zenoh-kuksa-provider.service
+After=zenoh-kuksa-provider.service
+After=software-horn-build.service
+
+[Container]
+ContainerName=software-horn
+Image=localhost/software-horn:latest
+PodmanArgs=--security-opt label=disable
+Network=esdv.network
+Environment=ZENOH_CONFIG=/zenoh-config.json5
+Volume=/usr/share/esdv/service-to-signal/config/software-horn-zenoh-config.json5:/zenoh-config.json5
+
+[Install]
+WantedBy=multi-user.target default.target
+

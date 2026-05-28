@@ -1,0 +1,20 @@
+[Unit]
+Description=zenoh-kuksa-provider
+# Wants=zenoh-kuksa-provider-build.service
+Wants=kuksa-databroker.service zenoh-router.service
+After=zenoh-kuksa-provider-build.service
+After=kuksa-databroker.service zenoh-router.service
+
+[Container]
+ContainerName=zenoh-kuksa-provider
+Image=localhost/zenoh-kuksa-provider:latest
+PodmanArgs=--security-opt label=disable
+Network=esdv.network
+HostName=zenoh-kuksa-provider
+PublishPort=14444:14444
+Environment=PROVIDER_CONFIG=/provider-config.json5
+Environment=RUST_LOG=INFO
+Volume=/usr/share/esdv/service-to-signal/config/zenoh-kuksa-provider-config.json5:/provider-config.json5
+
+[Install]
+WantedBy=multi-user.target default.target

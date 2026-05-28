@@ -1,0 +1,32 @@
+#!/bin/bash
+SVC_NAMES=(
+    "zenoh-router"
+    "kuksa-databroker"
+    "zenoh-kuksa-provider"
+    "horn-service-kuksa"
+    "software-horn"
+    "horn-client"
+)
+
+systemd::service::is_active() {
+    local svc_name=$1
+
+    systemctl is-active --quiet ${svc_name} 
+}
+
+error::assert_rc() {
+    local rc=$1
+    local msg=$2
+
+    if [ "${rc}" -ne 0 ]; then
+        echo "${msg}" >&2
+        exit 1
+    fi
+}
+
+for svc in "${SVC_NAMES[@]}"; do
+    systemd::service::is_active "${svc}"
+    error::assert_rc "$?" "${svc} is not running"
+done
+
+echo "Eclipe SDV blueprint is healthy"

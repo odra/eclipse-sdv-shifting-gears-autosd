@@ -1,0 +1,16 @@
+[Unit]
+Description=zenoh-kuksa-provider builder
+After=esdv-blueprint-mount.service
+# Conflicts=container-build-lock.service
+# Before=container-build-lock.service
+
+[Build]
+ImageTag=localhost/zenoh-kuksa-provider:latest
+SetWorkingDirectory=/usr/share/esdv/service-to-signal/components/kuksa-incubation/zenoh-kuksa-provider
+File=/usr/share/esdv/service-to-signal/components/kuksa-incubation/zenoh-kuksa-provider/Dockerfile
+
+# [Service]
+# ExecStopPost=podman image prune -f
+
+[Install]
+WantedBy=multi-user.target default.target
